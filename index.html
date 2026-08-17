@@ -7,8 +7,245 @@
 <meta name="description" content="La Tapa Mexicana. Restaurante familiar de cocina mexicana casera en Torrelodones, Madrid. Tacos, margaritas y recetas de generación en generación.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@500;700&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#e4572e;
+    --coral-dark:#c94420;
+    --marigold:#ffc145;
+    --cactus:#2f7a34;
+    --rope:#5a3420;
+    --rope-dark:#42250f;
+    --crema:#fff7ea;
+    --tinta:#2b2118;
+    --pink:#d1327a;
+    --shadow:0 16px 34px -16px rgba(43,33,24,.35);
+    --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Nunito", sans-serif;
+    color:var(--tinta);
+    background:var(--crema);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:"Bungee", system-ui, sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    line-height:1.08;
+    margin:0;
+  }
+  .script{font-family:"Caveat", cursive; font-weight:700;}
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 26px;}
+  section{position:relative;}
+
+  .eyebrow{
+    font-family:"Caveat", cursive;
+    font-weight:700;
+    font-size:1.5rem;
+    color:var(--coral);
+    display:inline-block;
+    transform:rotate(-2deg);
+    margin-bottom:2px;
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:15px 28px; border-radius:999px;
+    font-family:"Bungee", sans-serif; font-size:.78rem;
+    letter-spacing:.5px; text-transform:uppercase; text-decoration:none;
+    border:2px solid transparent; cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--coral); color:#fff; box-shadow:0 12px 22px -10px rgba(228,87,46,.6);}
+  .btn-primary:hover{background:var(--coral-dark);}
+  .btn-outline{background:transparent; border-color:var(--rope); color:var(--rope);}
+  .btn-outline:hover{background:var(--rope); color:#fff;}
+
+  .reveal{opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:16px 0; transition:background .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  header .wrap{display:flex; align-items:center; justify-content:space-between;}
+  header.solid{background:var(--crema); padding:10px 0; box-shadow:0 6px 18px -12px rgba(0,0,0,.25);}
+  .logo{display:flex; align-items:baseline; gap:8px; text-decoration:none; color:var(--rope-dark);}
+  header:not(.solid) .logo{color:#fff;}
+  .logo .mark{font-family:"Bungee", sans-serif; font-size:1.05rem;}
+  .logo .sub{font-family:"Caveat", cursive; font-weight:700; font-size:1.1rem; color:var(--marigold);}
+  nav.links{display:flex; gap:28px; align-items:center;}
+  nav.links a{text-decoration:none; font-size:.92rem; font-weight:700; position:relative; padding-bottom:4px; color:#fff;}
+  header.solid nav.links a{color:var(--rope-dark);}
+  nav.links a::after{content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--coral); transition:width .25s ease;}
+  nav.links a:hover::after{width:100%;}
+  .nav-toggle{display:none; background:none; border:none; font-size:1.6rem; cursor:pointer; color:#fff;}
+  header.solid .nav-toggle{color:var(--rope-dark);}
+
+  /* ---------- PORTADA ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    padding:150px 24px 0;
+    background:
+      radial-gradient(ellipse at 20% 15%, rgba(255,193,69,.35), transparent 55%),
+      radial-gradient(ellipse at 85% 75%, rgba(228,87,46,.30), transparent 55%),
+      linear-gradient(180deg, var(--rope-dark) 0%, var(--rope) 100%);
+    color:#fff;
+  }
+  .hero-content{max-width:680px;}
+  .hero h1{font-size:clamp(2.4rem, 6.5vw, 4.2rem); color:#fff;}
+  .hero h1 span{color:var(--marigold);}
+  .hero .tagline{margin:20px auto 0; font-size:1.12rem; max-width:48ch; color:rgba(255,247,234,.88); line-height:1.6;}
+  .hero .cta-row{margin-top:34px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .hero .quote{margin-top:38px; font-family:"Caveat", cursive; font-weight:700; font-size:1.5rem; color:var(--marigold);}
+  .hero .quote::before{content:"\201C";}
+  .hero .quote::after{content:"\201D";}
+
+  /* papel picado — banda con fondo propio para que los colores siempre se vean */
+  .picado-band{
+    background:var(--rope-dark);
+    padding-top:34px;
+  }
+  .picado-row{display:flex; width:100%; line-height:0;}
+  .picado-flag{
+    flex:1 0 auto; width:64px; height:52px; position:relative;
+    clip-path: polygon(0 0, 100% 0, 100% 58%, 50% 100%, 0 58%);
+    animation: sway 4.2s ease-in-out infinite;
+    transform-origin: top center;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.08);
+  }
+  .picado-flag::before{
+    content:"";
+    position:absolute; inset:8px 8px 22px 8px;
+    background-image:
+      radial-gradient(circle at 25% 30%, rgba(255,255,255,.6) 0 2.5px, transparent 3.5px),
+      radial-gradient(circle at 60% 55%, rgba(255,255,255,.6) 0 3px, transparent 4px),
+      radial-gradient(circle at 80% 25%, rgba(255,255,255,.6) 0 2.5px, transparent 3.5px);
+  }
+  .picado-flag:nth-child(5n+1){background:var(--coral);}
+  .picado-flag:nth-child(5n+2){background:var(--marigold);}
+  .picado-flag:nth-child(5n+3){background:var(--cactus);}
+  .picado-flag:nth-child(5n+4){background:var(--pink);}
+  .picado-flag:nth-child(5n+5){background:#fff;}
+  .picado-flag:nth-child(odd){animation-delay:.3s;}
+  @keyframes sway{0%,100%{transform:rotate(-3deg);} 50%{transform:rotate(3deg);}}
+  @media (prefers-reduced-motion: reduce){.picado-flag{animation:none;}}
+
+  /* ---------- separador festoneado (estilo toldo de taquería) ---------- */
+  .scallop{height:22px; background-repeat:repeat-x; background-size:26px 26px;}
+  .scallop-to-crema{background-image:radial-gradient(circle at 13px 0, transparent 13px, var(--crema) 13px); background-color:var(--rope-dark);}
+  .scallop-to-rope{background-image:radial-gradient(circle at 13px 0, transparent 13px, var(--rope-dark) 13px); background-color:var(--crema);}
+
+  /* ---------- section heads ---------- */
+  .section-head{max-width:620px; margin:0 auto 44px; text-align:center;}
+  .section-head h2{font-size:clamp(1.9rem,4vw,2.6rem);}
+  .section-head p{margin-top:14px; font-size:1.05rem; line-height:1.6;}
+
+  /* ---------- CARTA ---------- */
+  #carta{padding:70px 0 90px; background:var(--rope-dark); color:var(--crema);}
+  #carta .section-head p{color:rgba(255,247,234,.75);}
+  .menu-list{display:flex; flex-direction:column; gap:44px; max-width:760px; margin:0 auto;}
+  .menu-group-title{
+    display:flex; align-items:center; gap:10px;
+    font-size:1.05rem; color:var(--marigold);
+    border-bottom:2px solid rgba(255,247,234,.18);
+    padding-bottom:10px; margin-bottom:4px;
+  }
+  .dish{
+    display:flex; justify-content:space-between; gap:14px;
+    padding:14px 0; border-bottom:1px dashed rgba(255,247,234,.22);
+  }
+  .dish .name{font-weight:800; font-size:1rem;}
+  .dish .desc{font-size:.86rem; color:rgba(255,247,234,.62); margin-top:3px; line-height:1.4;}
+  .dish .price{font-family:"Bungee", sans-serif; font-size:.9rem; color:var(--coral-dark); background:var(--marigold); padding:4px 10px; border-radius:8px; white-space:nowrap; height:fit-content;}
+  .dish .price::before{content:"\20AC"; font-size:.7em; margin-right:1px;}
+  .menu-note{margin-top:36px; text-align:center; font-family:"Caveat", cursive; font-weight:700; font-size:1.3rem; color:var(--marigold);}
+
+  /* ---------- AMBIENTE + INFO ---------- */
+  #ambiente{padding:80px 0 90px; background:var(--crema);}
+  .amb-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .amb-copy h3{font-size:1.15rem; color:var(--rope-dark); margin-bottom:14px;}
+  .decor-text p{font-size:1.02rem; line-height:1.7; color:#4a3b2a; margin:0 0 14px;}
+  .decor-text strong{color:var(--coral-dark);}
+
+  .info-card{
+    margin-top:28px;
+    background:#fff;
+    border:1px solid rgba(90,52,32,.14);
+    border-radius:var(--radius);
+    padding:26px;
+    box-shadow:var(--shadow);
+  }
+  .info-line{display:flex; gap:14px; padding:12px 0; border-bottom:1px solid rgba(90,52,32,.1);}
+  .info-line:last-of-type{border-bottom:none;}
+  .info-line .ico{
+    width:36px; height:36px; border-radius:10px; background:var(--marigold); flex:none;
+    display:flex; align-items:center; justify-content:center; font-size:1rem;
+  }
+  .info-line b{display:block; font-size:.95rem; margin-bottom:2px; color:var(--rope-dark);}
+  .info-line span, .info-line a{font-size:.9rem; color:#5a4a38; text-decoration:none;}
+  .info-line a:hover{color:var(--coral);}
+  table.hours{width:100%; border-collapse:collapse; margin-top:4px;}
+  table.hours td{padding:5px 0; font-size:.88rem; color:#5a4a38;}
+  table.hours td:last-child{text-align:right; font-weight:700; color:var(--rope-dark);}
+  .map-wrap{margin-top:18px; border-radius:14px; overflow:hidden; box-shadow:var(--shadow);}
+  .map-wrap iframe{width:100%; height:220px; border:0; display:block;}
+  .info-cta{margin-top:18px;}
+
+  /* ---------- mariachi ilustrado ---------- */
+  .mariachi-box{
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .mariachi-stage{
+    position:relative; width:100%; max-width:340px;
+    border-radius:28px;
+    background: radial-gradient(circle at 50% 35%, rgba(255,193,69,.4), transparent 65%), var(--rope-dark);
+    box-shadow:var(--shadow);
+    padding:20px 10px 0;
+    overflow:hidden;
+  }
+  .mariachi-stage svg{display:block; width:100%; height:auto;}
+  .note{
+    position:absolute; font-family:"Bungee", sans-serif; color:var(--marigold); font-size:1.1rem;
+    animation:float 2.6s ease-in-out infinite;
+  }
+  .note-1{top:26%; left:10%; animation-delay:0s;}
+  .note-2{top:18%; right:12%; animation-delay:.9s;}
+  @keyframes float{
+    0%,100%{transform:translateY(0) rotate(-6deg); opacity:.85;}
+    50%{transform:translateY(-10px) rotate(6deg); opacity:1;}
+  }
+  @media (prefers-reduced-motion: reduce){.note{animation:none;}}
+  .mariachi-caption{margin-top:16px; font-family:"Caveat", cursive; font-weight:700; font-size:1.35rem; color:var(--rope-dark);}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--rope-dark); color:rgba(255,247,234,.65); text-align:center; padding:32px 20px; font-size:.85rem;}
+  footer .fmark{font-family:"Bungee", sans-serif; color:#fff; font-size:.95rem; margin-bottom:6px;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    nav.links{
+      position:fixed; top:0; right:0; height:100vh; width:min(78vw,300px);
+      background:var(--rope-dark); flex-direction:column; justify-content:center; align-items:flex-start;
+      padding:40px; transform:translateX(100%); transition:transform .3s ease; z-index:60;
+    }
+    nav.links.open{transform:translateX(0);}
+    nav.links a{color:#fff; font-size:1.05rem;}
+    .nav-toggle{display:block;}
+    .amb-grid{grid-template-columns:1fr; gap:44px;}
+    .mariachi-box{order:-1;}
+  }
+</style>
 </head>
 <body>
 
@@ -18,83 +255,50 @@
       <span class="mark">LA TAPA</span><span class="sub">mexicana</span>
     </a>
     <nav class="links" id="navLinks">
-      <a href="#historia">Nosotros</a>
       <a href="#carta">La carta</a>
-      <a href="#ambiente">Ambiente</a>
-      <a href="#info">Cómo llegar</a>
-      <a href="tel:+34722489300" class="btn btn-primary" style="padding:10px 18px;">Llamar</a>
+      <a href="#ambiente">Ambiente e info</a>
+      <a href="tel:+34722489300" class="btn btn-primary" style="padding:9px 18px;">Llamar</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
   </div>
 </header>
 
+<!-- ================= PORTADA ================= -->
 <section class="hero" id="inicio">
-  <div class="serape"></div>
-  <div class="hero-inner">
-    <div class="reveal in">
-      <p class="eyebrow">Torrelodones · cocina de familia</p>
-      <h1>Sabor a <span>México</span>,<br>hecho en casa</h1>
-      <p class="tagline">Recetas que pasan de generación en generación, en un rincón pequeñito y acogedor del centro de Torrelodones. Tacos, margaritas y la calidez de sentirte parte de la familia.</p>
-      <div class="cta-row">
-        <a href="#carta" class="btn btn-primary">Ver la carta</a>
-        <a href="tel:+34722489300" class="btn btn-ghost">722 48 93 00</a>
-      </div>
-      <p class="quote">Todo es casero y de recetas que han pasado de generación en generación.</p>
+  <div class="hero-content reveal in">
+    <p class="eyebrow" style="color:var(--marigold);">Torrelodones · cocina de familia</p>
+    <h1>Sabor a <span>México</span>, hecho en casa</h1>
+    <p class="tagline">Recetas que pasan de generación en generación, en un rincón pequeñito y acogedor del centro de Torrelodones.</p>
+    <div class="cta-row">
+      <a href="#carta" class="btn btn-primary">Ver la carta</a>
+      <a href="tel:+34722489300" class="btn btn-outline" style="border-color:#fff; color:#fff;">722 48 93 00</a>
     </div>
-    <div class="reveal in" style="transition-delay:.15s;">
-      <div class="hero-plate">
-        <div class="marigold" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-        <div class="center"><span>DESDE<br>TORRELODONES<br>CON CARIÑO</span></div>
-      </div>
-    </div>
+    <p class="quote">Todo es casero y de recetas que han pasado de generación en generación.</p>
   </div>
+</section>
+
+<div class="picado-band">
   <div class="picado-row">
     <div class="picado-flag"></div><div class="picado-flag"></div><div class="picado-flag"></div>
     <div class="picado-flag"></div><div class="picado-flag"></div><div class="picado-flag"></div>
     <div class="picado-flag"></div><div class="picado-flag"></div><div class="picado-flag"></div>
     <div class="picado-flag"></div><div class="picado-flag"></div><div class="picado-flag"></div>
   </div>
-  <div class="scroll-cue"><span></span>desliza</div>
-</section>
+  <div class="scallop scallop-to-crema"></div>
+</div>
 
-<div class="greca" aria-hidden="true"></div>
-
-<section id="historia">
-  <div class="wrap">
-    <div class="historia-grid">
-      <div class="historia-copy reveal">
-        <p class="eyebrow">Nuestra historia</p>
-        <h2 class="h2-anil">Una casa mexicana en la sierra de Madrid</h2>
-        <p>La Tapa Mexicana nació como un proyecto familiar: un local pequeño en pleno centro de Torrelodones donde cocinar como se cocina en casa, con recetas heredadas y mucho cariño en cada plato.</p>
-        <p>Desde el primer taco hasta el último trago de margarita, <strong>todo se prepara al momento</strong>, con salsas propias y un trato cercano que hace que cada visita se sienta como llegar a casa de la familia.</p>
-        <p>Un lugar pequeñito pero acogedor, donde las dueñas conocen a sus clientes por su nombre y el aroma a maíz tostado recibe desde la puerta.</p>
-        <div class="stat-row">
-          <div class="stat"><b>100%</b><span>Recetas caseras</span></div>
-          <div class="stat"><b>4.7★</b><span>Valoración media</span></div>
-          <div class="stat"><b>+1500</b><span>Reseñas felices</span></div>
-        </div>
-      </div>
-      <div class="historia-art reveal" style="transition-delay:.1s;">
-        <div class="tile-frame"><span class="tag">Cocina de mercado, casera y al momento</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- ================= CARTA ================= -->
 <section id="carta">
   <div class="wrap">
-    <div class="section-head on-dark reveal">
+    <div class="section-head reveal">
       <p class="eyebrow">La carta</p>
-      <h2>Para compartir, para repetir</h2>
+      <h2 style="color:#fff;">Para compartir, para repetir</h2>
       <p>Una carta corta y honesta: lo justo para que todo salga fresco, casero y con el sabor auténtico de siempre.</p>
     </div>
 
     <div class="menu-list">
-
       <div class="menu-group reveal">
-        <h3 class="menu-group-title"><span class="chili">🌶</span> Para picar</h3>
+        <h3 class="menu-group-title">🌶️ Para picar</h3>
         <div class="dish"><div><div class="name">Guacamole casero</div><div class="desc">Aguacate machacado al momento, lima y cilantro</div></div><div class="price">7,50</div></div>
         <div class="dish"><div><div class="name">Nachos Tapa Mexicana</div><div class="desc">Queso fundido, pico de gallo, jalapeños y crema</div></div><div class="price">9,50</div></div>
         <div class="dish"><div><div class="name">Queso fundido con chorizo</div><div class="desc">Con tortillas de maíz recién hechas</div></div><div class="price">10,00</div></div>
@@ -104,7 +308,7 @@
       </div>
 
       <div class="menu-group reveal">
-        <h3 class="menu-group-title"><span class="chili">🌮</span> Tacos &amp; antojitos</h3>
+        <h3 class="menu-group-title">🌮 Tacos &amp; antojitos</h3>
         <div class="dish"><div><div class="name">Tacos al pastor (3 uds.)</div><div class="desc">Cerdo adobado, piña asada y cilantro</div></div><div class="price">11,00</div></div>
         <div class="dish"><div><div class="name">Tacos de bistec (3 uds.)</div><div class="desc">Res a la plancha, cebolla y salsa verde</div></div><div class="price">11,50</div></div>
         <div class="dish"><div><div class="name">Tacos de pollo tinga</div><div class="desc">Pollo deshebrado en salsa de chipotle</div></div><div class="price">10,50</div></div>
@@ -114,7 +318,7 @@
       </div>
 
       <div class="menu-group reveal">
-        <h3 class="menu-group-title"><span class="chili">🍲</span> Platos fuertes</h3>
+        <h3 class="menu-group-title">🍲 Platos fuertes</h3>
         <div class="dish"><div><div class="name">Enchiladas verdes</div><div class="desc">Pollo, salsa de tomatillo, crema y queso</div></div><div class="price">14,00</div></div>
         <div class="dish"><div><div class="name">Mole poblano</div><div class="desc">Receta familiar, con pollo y arroz</div></div><div class="price">15,50</div></div>
         <div class="dish"><div><div class="name">Fajitas de pollo o ternera</div><div class="desc">Pimientos, cebolla y tortillas para armar</div></div><div class="price">15,00</div></div>
@@ -122,93 +326,43 @@
       </div>
 
       <div class="menu-group reveal">
-        <h3 class="menu-group-title"><span class="chili">🍮</span> Postres</h3>
+        <h3 class="menu-group-title">🍮 Postres</h3>
         <div class="dish"><div><div class="name">Churros con chocolate</div><div class="desc">Hechos al momento, con canela</div></div><div class="price">6,00</div></div>
         <div class="dish"><div><div class="name">Pastel de tres leches</div><div class="desc">Receta de la casa</div></div><div class="price">6,50</div></div>
         <div class="dish"><div><div class="name">Flan casero</div><div class="desc">Con caramelo suave</div></div><div class="price">5,50</div></div>
       </div>
 
       <div class="menu-group reveal">
-        <h3 class="menu-group-title"><span class="chili">🍹</span> Bebidas &amp; margaritas</h3>
+        <h3 class="menu-group-title">🍹 Bebidas &amp; margaritas</h3>
         <div class="dish"><div><div class="name">Margarita clásica</div><div class="desc">Tequila, triple seco y lima</div></div><div class="price">8,00</div></div>
         <div class="dish"><div><div class="name">Margarita de fresa o mango</div><div class="desc">Fruta natural</div></div><div class="price">8,50</div></div>
         <div class="dish"><div><div class="name">Michelada</div><div class="desc">Cerveza, lima y especias</div></div><div class="price">6,00</div></div>
         <div class="dish"><div><div class="name">Agua fresca del día</div><div class="desc">Jamaica, horchata o tamarindo</div></div><div class="price">3,50</div></div>
       </div>
-
     </div>
 
     <p class="menu-note">Pregunta por nuestro plato del día — cambia según lo que traiga el mercado.</p>
   </div>
 </section>
 
-<div class="greca greca-light" aria-hidden="true"></div>
+<div class="scallop scallop-to-rope"></div>
 
+<!-- ================= AMBIENTE + INFO ================= -->
 <section id="ambiente">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">El ambiente</p>
-      <h2>Pequeño, cálido y con mucho color</h2>
-      <p>Un local pequeñito en el corazón de Torrelodones, decorado con los colores, texturas y detalles que hacen que cada mesa se sienta como una fiesta familiar.</p>
+      <p class="eyebrow">Ambiente e información</p>
+      <h2 style="color:var(--rope-dark);">Ven a conocernos</h2>
     </div>
 
-    <div class="ambiente-grid">
-      <ul class="decor-list reveal">
-        <li>
-          <div class="decor-swatch m1" aria-hidden="true"></div>
-          <div>
-            <h4>Papel picado en el techo</h4>
-            <p>Banderines de colores cruzan el local de lado a lado, igual que en las fiestas de los pueblos mexicanos.</p>
-          </div>
-        </li>
-        <li>
-          <div class="decor-swatch m2" aria-hidden="true"></div>
-          <div>
-            <h4>Azulejo talavera en las mesas</h4>
-            <p>Motivos pintados a mano inspirados en la cerámica de Puebla, en cada rincón del comedor.</p>
-          </div>
-        </li>
-        <li>
-          <div class="decor-swatch m5" aria-hidden="true"></div>
-          <div>
-            <h4>Luces cálidas y velas</h4>
-            <p>Guirnaldas de luz templada que dan al local ese ambiente de sobremesa larga y buena charla.</p>
-          </div>
-        </li>
-        <li>
-          <div class="decor-swatch m4" aria-hidden="true"></div>
-          <div>
-            <h4>Madera cálida y plantas</h4>
-            <p>Mesas de madera maciza y toques verdes que dan frescura al espacio, aunque sea pequeño.</p>
-          </div>
-        </li>
-        <li>
-          <div class="decor-swatch m3" aria-hidden="true"></div>
-          <div>
-            <h4>Textiles con mucho color</h4>
-            <p>Manteles y detalles en rosa mexicano y naranja cempasúchil que visten cada mesa.</p>
-          </div>
-        </li>
-      </ul>
-
-      <div class="ambiente-photo reveal" style="transition-delay:.1s;">
-        <div class="ambiente-photo-inner">
-          <span>📷</span>
-          <p>Espacio reservado para fotos reales del local<br>(interior, platos y detalle de decoración)</p>
+    <div class="amb-grid">
+      <div class="amb-copy reveal">
+        <div class="decor-text">
+          <h3>Así se vive La Tapa</h3>
+          <p>Un local pequeñito decorado con <strong>papel picado</strong> colgando del techo, mesas de madera y azulejos pintados a mano — el tipo de sitio donde la música y las risas se mezclan con el olor a maíz tostado.</p>
+          <p>Aquí no faltan ni las margaritas ni la música de fondo: siempre hay algo sonando que te transporta directo a México.</p>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="info">
-  <div class="wrap">
-    <div class="section-head on-dark reveal">
-      <p class="eyebrow">Visítanos</p>
-      <h2>Te esperamos en Torrelodones</h2>
-    </div>
-    <div class="info-grid">
-      <div class="reveal">
         <div class="info-card">
           <div class="info-line">
             <div class="ico">📍</div>
@@ -231,13 +385,84 @@
               </table>
             </div>
           </div>
-          <div class="cta-row" style="margin-top:24px;">
+          <div class="map-wrap">
+            <iframe src="https://www.google.com/maps?q=La+Tapa+Mexicana+Calle+Carniceria+4+Torrelodones&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de La Tapa Mexicana en Torrelodones"></iframe>
+          </div>
+          <div class="info-cta">
             <a href="tel:+34722489300" class="btn btn-primary">Reservar por teléfono</a>
           </div>
         </div>
       </div>
-      <div class="reveal map-wrap" style="transition-delay:.1s;">
-        <iframe src="https://www.google.com/maps?q=La+Tapa+Mexicana+Calle+Carniceria+4+Torrelodones&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de La Tapa Mexicana en Torrelodones"></iframe>
+
+      <div class="mariachi-box reveal" style="transition-delay:.1s;">
+        <div class="mariachi-stage">
+          <span class="note note-1">♪</span>
+          <span class="note note-2">♫</span>
+          <svg viewBox="0 0 320 380" xmlns="http://www.w3.org/2000/svg">
+            <!-- caja/base -->
+            <rect x="95" y="330" width="130" height="42" rx="8" fill="#3a2211"/>
+            <rect x="95" y="330" width="130" height="10" rx="4" fill="#4a2c16"/>
+            <text x="160" y="357" text-anchor="middle" font-family="Bungee, sans-serif" font-size="11" fill="#ffc145">TAPA</text>
+
+            <!-- brazo izquierdo con maraca -->
+            <path d="M118,215 C80,200 55,175 48,145" stroke="#caa07a" stroke-width="16" fill="none" stroke-linecap="round"/>
+            <ellipse cx="42" cy="128" rx="16" ry="22" fill="#e4572e" transform="rotate(-25 42 128)"/>
+            <rect x="38" y="140" width="8" height="18" rx="3" fill="#5a3420" transform="rotate(-25 42 128)"/>
+            <circle cx="37" cy="120" r="2.4" fill="#fff7ea"/>
+            <circle cx="47" cy="128" r="2.4" fill="#fff7ea"/>
+            <circle cx="40" cy="134" r="2.4" fill="#fff7ea"/>
+
+            <!-- brazo derecho con maraca -->
+            <path d="M202,215 C240,200 265,175 272,145" stroke="#caa07a" stroke-width="16" fill="none" stroke-linecap="round"/>
+            <ellipse cx="278" cy="128" rx="16" ry="22" fill="#2f7a34" transform="rotate(25 278 128)"/>
+            <rect x="274" y="140" width="8" height="18" rx="3" fill="#5a3420" transform="rotate(25 278 128)"/>
+            <circle cx="273" cy="120" r="2.4" fill="#fff7ea"/>
+            <circle cx="283" cy="128" r="2.4" fill="#fff7ea"/>
+            <circle cx="276" cy="134" r="2.4" fill="#fff7ea"/>
+
+            <!-- poncho / cuerpo -->
+            <path d="M112,205 L208,205 L222,335 L98,335 Z" fill="#8a2f1f"/>
+            <path d="M112,205 L208,205 L212,235 L108,235 Z" fill="#e4572e"/>
+            <path d="M104,258 L216,258 L219,278 L101,278 Z" fill="#ffc145"/>
+            <path d="M100,300 L220,300 L222,318 L98,318 Z" fill="#2f7a34"/>
+
+            <!-- cuello -->
+            <rect x="148" y="185" width="24" height="26" fill="#e8b48a"/>
+
+            <!-- cabeza -->
+            <circle cx="160" cy="150" r="46" fill="#e8b48a"/>
+            <circle cx="122" cy="152" r="9" fill="#e8b48a"/>
+            <circle cx="198" cy="152" r="9" fill="#e8b48a"/>
+
+            <!-- cejas -->
+            <path d="M136,132 q10,-8 20,-2" stroke="#3a2211" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M184,132 q-10,-8 -20,-2" stroke="#3a2211" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+            <!-- ojos felices (arcos) -->
+            <path d="M138,144 q6,-8 12,0" stroke="#3a2211" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+            <path d="M170,144 q6,-8 12,0" stroke="#3a2211" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+
+            <!-- mejillas -->
+            <circle cx="132" cy="160" r="7" fill="#e4572e" opacity=".35"/>
+            <circle cx="188" cy="160" r="7" fill="#e4572e" opacity=".35"/>
+
+            <!-- bigote -->
+            <path d="M128,168 q32,22 64,0 q-6,16 -32,16 q-26,0 -32,-16 Z" fill="#2b2118"/>
+
+            <!-- sonrisa -->
+            <path d="M148,180 q12,10 24,0" stroke="#8a2f1f" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+            <!-- sombrero: ala -->
+            <ellipse cx="160" cy="102" rx="78" ry="18" fill="#5a3420"/>
+            <ellipse cx="160" cy="99" rx="78" ry="15" fill="#6b4226"/>
+            <!-- sombrero: copa -->
+            <path d="M128,100 L136,42 Q160,28 184,42 L192,100 Z" fill="#6b4226"/>
+            <path d="M128,100 L192,100 L190,90 L130,90 Z" fill="#5a3420"/>
+            <rect x="130" y="88" width="60" height="10" fill="#e4572e"/>
+            <circle cx="160" cy="46" r="5" fill="#ffc145"/>
+          </svg>
+        </div>
+        <p class="mariachi-caption">¡Bienvenidos, aquí siempre hay música!</p>
       </div>
     </div>
   </div>
@@ -248,6 +473,22 @@
   <div>Calle Carnicería, 4 · Torrelodones, Madrid · 722 48 93 00</div>
 </footer>
 
-<script src="js/script.js"></script>
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('solid', window.scrollY > 40);
+  });
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
 </body>
 </html>
