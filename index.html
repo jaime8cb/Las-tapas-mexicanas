@@ -23,7 +23,7 @@
     --radius:20px;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; background:var(--rope-dark);}
+  html{scroll-behavior:smooth; background:var(--rope-dark); max-width:100%; overflow-x:hidden;}
   body{
     margin:0;
     font-family:"Nunito", sans-serif;
@@ -116,9 +116,9 @@
     background:var(--rope-dark);
     padding-top:34px;
   }
-  .picado-row{display:flex; width:100%; line-height:0;}
+  .picado-row{display:flex; width:100%; line-height:0; justify-content:space-between;}
   .picado-flag{
-    flex:1 0 auto; width:64px; height:52px; position:relative;
+    flex:0 1 64px; min-width:24px; height:52px; position:relative;
     clip-path: polygon(0 0, 100% 0, 100% 58%, 50% 100%, 0 58%);
     animation: sway 4.2s ease-in-out infinite;
     transform-origin: top center;
